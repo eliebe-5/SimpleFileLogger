@@ -9,7 +9,7 @@ int main()
 
 	Log::writef("%c am a %s style string. Here is a number: %d and another: %f", 'I', "printf", 100, 12.34f);
 	
-	Log::commit_frame();
+	Log::commit_to_file();
 	
 	Log::cleanup();
 
