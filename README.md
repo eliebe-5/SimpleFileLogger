@@ -31,3 +31,24 @@ The config struct contains options:
 - bool log_info: log info about the logger itself. Default to false.
 
 # Functions
+Initiate logger, this need to be called.
+```c++
+Log::init();
+```
+Commit buffer to file, call, as an example, once every frame.
+```c++
+Log::commit_to_file();
+```
+Cleanup logger, this should be called for safety, this will also commit any uncommited data to the file.
+```c++
+Log::cleanup();
+```
+Write functions. Error and warning prepend [ERROR] and [WARNING] respectively to the log before the message.
+```c++
+Log::write("A simple string.");
+Log::warn("A simple warning.");
+Log::error("A simple error.");
+Log::writef("A printf style %s.", "string");
+Log::warnf("A printf style %s.", "warning");
+Log::errorf("A printf style %s.", "error");
+```
