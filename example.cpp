@@ -11,4 +11,5 @@ int main()
 
 	Log::cleanup();
 
+	return 0;
 }
