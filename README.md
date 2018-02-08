@@ -5,7 +5,7 @@ A simple single header lightweight file logger.
 The logger needs to be initiated, with or without a config struct.
 And after the program is finished the logger should be cleand up.
 
-```
+```c++
 int main()
 {
   Log::init();
