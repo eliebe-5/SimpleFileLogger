@@ -11,6 +11,7 @@
 namespace Log {
 
 	void write(char*);
+	void writef(char*, ...);
 
 	/**
 	Struct used in initializing the Logger
@@ -21,7 +22,7 @@ namespace Log {
 		//Add system time stamps too logged items
 		bool timestamps = true;
 		//Time allowed for each commit to run in ms
-		float time_limit = HUGE_VAL;
+		float time_limit = HUGE_VALF;
 		//Path and name
 		char* path = (char*)"output.txt";
 		//Log the loggers info
@@ -50,12 +51,14 @@ namespace Log {
 		assert(logger.init);
 
 		logger.config = c;
-		write("[[[LOG INIT]]]");
+		if(logger.config.log_info)
+			write("[[[LOG INIT]]]");
 	}
 
 	void commit_to_file()
 	{
-		write("[[[LOG COMMIT]]]");
+		if (logger.config.log_info)
+			write("[[[LOG COMMIT]]]");
 
 		long double timer = 0;
 
@@ -84,14 +87,15 @@ namespace Log {
 			/** Done Commiting */
 
 			auto s2 = std::chrono::high_resolution_clock::now();
-			timer += (long double)std::chrono::duration_cast<std::chrono::milliseconds>(s2 - s1).count();
+			timer += (long double)std::chrono::duration_cast<std::chrono::nanoseconds>(s2 - s1).count() * 0.000001;
 		}
 
 	}
 
 	void cleanup()
 	{
-		write("[[[LOG CLEANUP]]]");
+		if (logger.config.log_info)
+			write("[[[LOG CLEANUP]]]");
 		while (logger.queue.size() > 0)
 			commit_to_file();
 		fclose(logger.fp);
