@@ -82,6 +82,8 @@ namespace Log {
 
 			fprintf(logger.fp, "\n");
 
+			//delete[] logger.queue.front();
+
 			logger.queue.pop();
 
 			/** Done Commiting */
@@ -107,7 +109,9 @@ namespace Log {
 
 	void write(char* s)
 	{
-		logger.queue.push(s);
+		char* w = new char[strlen(s)];
+		strcpy(w, s);
+		logger.queue.push(w);
 	}
 
 	void warn(char *s)
@@ -204,11 +208,14 @@ namespace Log {
 			}
 		}
 
+		
+
 		char* test = new char[res.size()]; 
 		strcpy(test, res.c_str());
 		logger.queue.push(test);
 
 		va_end(args);
+
 	}
 
 	void writef(char* s, ...)
@@ -230,6 +237,7 @@ namespace Log {
 		va_start(ap, s);
 
 		fdewrap(w, ap);
+		delete[] w;
 	}
 
 	void errorf(char *s, ...)
@@ -243,5 +251,6 @@ namespace Log {
 		va_start(ap, s);
 		
 		fdewrap(w, ap);
+		delete[] w;
 	}
 }
